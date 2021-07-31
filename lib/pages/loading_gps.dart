@@ -1,4 +1,4 @@
-import 'package:enri_client/helpers/helpers.dart';
+//import 'package:enri_client/helpers/helpers.dart';
 import 'package:enri_client/pages/acceso_gps_page.dart';
 import 'package:enri_client/pages/mapa_page.dart';
 
@@ -16,9 +16,9 @@ class LoadingGps extends StatefulWidget {
 class _LoadingGpsState extends State<LoadingGps> with WidgetsBindingObserver {
 
   @override
-  void initState() {
-    WidgetsBinding.instance.addObserver(this);
+  void initState() {    
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
@@ -32,7 +32,15 @@ class _LoadingGpsState extends State<LoadingGps> with WidgetsBindingObserver {
     
     if (  state == AppLifecycleState.resumed ) {
       if ( await Geolocator.isLocationServiceEnabled()  ) {
-        Navigator.pushReplacement(context, navegarMapaFadeIn(context, MapaPage() ));
+        
+        Navigator.pushReplacement(
+        context, 
+        PageRouteBuilder(
+          pageBuilder: ( _, __, ___ ) => MapaPage(),
+          transitionDuration: Duration(milliseconds: 0)
+        )
+      );
+        
       }
     }
 
@@ -61,14 +69,33 @@ class _LoadingGpsState extends State<LoadingGps> with WidgetsBindingObserver {
 
     
     final permisoGPS = await Permission.location.isGranted;
+    
     final gpsActivo = await Geolocator.isLocationServiceEnabled();
-
+    
 
     if ( permisoGPS && gpsActivo ) {
-      Navigator.pushReplacement(context, navegarMapaFadeIn(context, MapaPage() ));
+
+      
+      Navigator.pushReplacement(
+        context, 
+        PageRouteBuilder(
+          pageBuilder: ( _, __, ___ ) => MapaPage(),
+          transitionDuration: Duration(milliseconds: 0)
+        )
+      );
       return '';
     } else if ( !permisoGPS ) {
-      Navigator.pushReplacement(context, navegarMapaFadeIn(context, AccesoGpsPage()));
+
+      
+
+      Navigator.pushReplacement(
+        context, 
+        PageRouteBuilder(
+          pageBuilder: ( _, __, ___ ) => AccesoGpsPage(),
+          transitionDuration: Duration(milliseconds: 0)
+        )
+      );
+      
       return 'Es necesario el permiso de GPS';
     } else {
       return 'Active el GPS';

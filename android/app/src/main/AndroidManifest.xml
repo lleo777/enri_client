@@ -19,8 +19,13 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="enri_client"
-        android:icon="@mipmap/ic_launcher">
+        android:label="enri_client"          
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true">
+
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyD6Ie3Sxy_VnIyFAtf6YP7ygwy-XCje41c"/>
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

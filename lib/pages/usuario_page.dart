@@ -1,13 +1,11 @@
 
-import 'package:enri_client/utils/color.dart';
-import 'package:enri_client/widgets/Boton_marron.dart';
+import 'package:enri_client/widgets/boton_azul.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'package:enri_client/models/usuario.dart';
 import 'package:enri_client/service/auth_service.dart';
-//import 'package:enri_client/service/chat_service.dart';
 import 'package:enri_client/service/socket_service.dart';
 import 'package:enri_client/service/usuarios_service.dart';
 
@@ -44,13 +42,31 @@ class _UsuariosPageState extends State<UsuariosPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text( usuario.nombre , style: TextStyle(color: Colors.black87 ) ),
-        elevation: 1,
-        backgroundColor: Colors.white,
+        elevation: 15,
+        //backgroundColor: Colors.white,
+        flexibleSpace: Container(
+          
+          decoration: BoxDecoration(
+
+            gradient: LinearGradient(
+
+              colors: [Colors.purple[600], Colors.cyanAccent],
+              begin: Alignment.bottomRight,
+              end: Alignment.topLeft
+
+            )
+
+          )
+          
+          ,),
+
+
+
         leading: IconButton(
           icon: Icon( Icons.exit_to_app, color: Colors.black87 ),
           onPressed: () {
 
-            socketService.disconnect();
+            socketService.onDisconnect();
             Navigator.pushReplacementNamed(context, 'login');
             AuthService.deleteToken();
 
@@ -60,7 +76,7 @@ class _UsuariosPageState extends State<UsuariosPage> {
           Container(
             margin: EdgeInsets.only( right: 10 ),
             child: (socketService.serverStatus == ServerStatus.Online )
-            ? Icon( Icons.check_circle, color: Colors.blue[400] )
+            ? Icon( Icons.check_circle, color: Colors.greenAccent)
             : Icon( Icons.offline_bolt, color: Colors.red ),
           )
         ],
@@ -70,14 +86,22 @@ class _UsuariosPageState extends State<UsuariosPage> {
         width: double.infinity,
             decoration: BoxDecoration(
               gradient: LinearGradient(
-               colors: [orangeColors, orangeLightColors]
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+               colors: [
+                 
+                 Colors.white10,
+                Colors.purpleAccent[400],
+                Colors.purple[800],
+                 
+               ]
               
               ),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                  BotonMarron(
+                  BotonAzul(
                     text: 'Empezar',
                      onPressed:(){
                       Navigator.pushReplacementNamed(context, 'loading_gps');

@@ -20,7 +20,7 @@ class BotonAzul extends StatelessWidget {
           primary: Colors.blue,
           elevation: 5,
           shape: StadiumBorder(),
-          minimumSize: Size(200, 40)
+          minimumSize: Size(195, 37)
           
         ),
         

@@ -2,6 +2,7 @@ import 'package:enri_client/pages/acceso_gps_page.dart';
 import 'package:enri_client/pages/loading_gps.dart';
 import 'package:enri_client/pages/mapa_page.dart';
 import 'package:enri_client/pages/home_Page.dart';
+import 'package:enri_client/pages/test_conection.text';
 import 'package:enri_client/pages/usuario_page.dart';
 import 'package:flutter/material.dart';
 
@@ -25,6 +26,7 @@ final Map<String, Widget Function(BuildContext)> appRoutes = {
   'home_page'   : ( _ ) => HomePage(),
   'loading_gps' : ( _ ) => LoadingGps(),
   'usuarios'    : ( _ ) => UsuariosPage(),
+  'conection'   : ( _ ) => TestConection(),
   
   
 };

@@ -37,7 +37,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
     this.socketService = Provider.of<SocketService>(context, listen: false);
     this.authService   = Provider.of<AuthService>(context, listen: false);
 
-    this.socketService.socket.on('mensaje-personal', _escucharMensaje );
+    this.socketService.socket.on('mensaje-personal', (_escucharMensaje) );
 
     _cargarHistorial( this.chatService.usuarioPara.uid );
   } 

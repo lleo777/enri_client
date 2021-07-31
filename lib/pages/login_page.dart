@@ -19,17 +19,33 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffF2F2F2),
+      
       body: SafeArea(
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Container(
-            height: MediaQuery.of(context).size.height * 0.9,
+            decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              // stops: [0.5, 1],  
+              colors: [
+                Colors.white10,
+                Colors.purpleAccent[400],
+                Colors.purple[800],
+                
+                ]
+          )
+      ),
+           height: MediaQuery.of(context).size.height * 0.97,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
 
-                Logo( titulo: 'Messenger' ),
+                Logo( 
+                  titulo: 'Bienvenido',
+                  subtitulo: 'a Inri', ),
+
 
                 _Form(),
 
@@ -39,7 +55,7 @@ class LoginPage extends StatelessWidget {
                   subTitulo: 'Crea una ahora!',
                 ),
 
-                Text('Términos y condiciones de uso', style: TextStyle( fontWeight: FontWeight.w200 ),)
+                Text('Términos y condiciones de uso', style: TextStyle( fontWeight: FontWeight.w400, color: Colors.white ),)
 
               ],
             ),
@@ -69,23 +85,29 @@ class __FormState extends State<_Form> {
     final socketService = Provider.of<SocketService>( context );
 
     return Container(
-      margin: EdgeInsets.only(top: 40),
-      padding: EdgeInsets.symmetric( horizontal: 50 ),
+      margin: EdgeInsets.only(top: 30),
+      padding: EdgeInsets.symmetric( horizontal: 45 ),
        child: Column(
          children: <Widget>[
            
-           CustomInput(
-             icon: Icons.mail_outline,
-             placeholder: 'Correo',
-             keyboardType: TextInputType.emailAddress, 
-             textController: emailCtrl,
+           SizedBox(
+             height: 65,
+             child: CustomInput(
+               icon: Icons.mail_outline,
+               placeholder: 'Correo',
+               keyboardType: TextInputType.emailAddress, 
+               textController: emailCtrl,
+             ),
            ),
 
-           CustomInput(
-             icon: Icons.lock_outline,
-             placeholder: 'Contraseña',
-             textController: passCtrl,
-             isPassword: true,
+           SizedBox(
+             height: 65,
+             child: CustomInput(
+               icon: Icons.lock_outline,
+               placeholder: 'Contraseña',
+               textController: passCtrl,
+               isPassword: true,
+             ),
            ),
            
 
@@ -98,7 +120,7 @@ class __FormState extends State<_Form> {
                final loginOk = await authService.login( emailCtrl.text.trim(), passCtrl.text.trim() );
 
                 if ( loginOk ) {
-                  socketService.connect();
+                  socketService.onConnect();
                   Navigator.pushReplacementNamed(context, 'usuarios');
                 } else {
                   // Mostara alerta

@@ -16,8 +16,9 @@ class _AccesoGpsPageState extends State<AccesoGpsPage> with WidgetsBindingObserv
 @override
   void initState() {
    //implement initState
-    WidgetsBinding.instance.addObserver(this);
+    
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
   }  
   @override
   void dispose() {
@@ -30,8 +31,7 @@ class _AccesoGpsPageState extends State<AccesoGpsPage> with WidgetsBindingObserv
   void didChangeAppLifecycleState(AppLifecycleState state) async{
     //implementacion didChangeAppLifecycleState
     //super.didChangeAppLifecycleState(state);
-    if (state == AppLifecycleState.resumed && !popup) {
-
+    if (state == AppLifecycleState.resumed && !popup) {       
      if( await Permission.location.isGranted ){
        Navigator.pushReplacementNamed(context, 'loading');
      }            
@@ -65,6 +65,7 @@ Widget build(BuildContext context) {
           final status = await Permission.location.request();
           //Permission.location.request();
           await this.accesoGPS(status);
+         
 
           popup = false;
 
@@ -78,14 +79,11 @@ Widget build(BuildContext context) {
 
 Future accesoGPS( PermissionStatus status) async {
 
-
   switch (status) {
-   
-        
-    case PermissionStatus.granted:
+           
+    case PermissionStatus.granted:    
      await Navigator.pushReplacementNamed(context, 'loading');
       break;
-
     
     case PermissionStatus.denied:
     case PermissionStatus.restricted:

@@ -25,7 +25,7 @@ class BotonMarron extends StatelessWidget {
           
         ),
         
-        child: Text( this.text , style: TextStyle( color: Colors.black, fontSize: 17 ),  
+        child: Text( this.text , style: TextStyle( color: Colors.black, fontSize: 17, ),  
                     
         ),
     );

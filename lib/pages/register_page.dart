@@ -18,17 +18,32 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffF2F2F2),
+     
       body: SafeArea(
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Container(
-            height: MediaQuery.of(context).size.height * 0.9,
+            decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              // stops: [0.5, 1],  
+              colors: [
+                Colors.white10,
+                Colors.purpleAccent[400],
+                Colors.purple[800],
+                
+                ]
+          )
+      ),
+            height: MediaQuery.of(context).size.height * 0.97,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
 
-                Logo( titulo: 'Registro' ),
+                Logo( 
+                  titulo: 'Registro ',
+                  subtitulo: '', ),
 
                 _Form(),
 
@@ -38,7 +53,7 @@ class RegisterPage extends StatelessWidget {
                   subTitulo: 'Ingresa ahora!',
                 ),
 
-                Text('Términos y condiciones de uso', style: TextStyle( fontWeight: FontWeight.w200 ),)
+                Text('Términos y condiciones de uso', style: TextStyle( fontWeight: FontWeight.w400, color: Colors.white ),)
 
               ],
             ),
@@ -69,30 +84,39 @@ class __FormState extends State<_Form> {
     final socketService = Provider.of<SocketService>( context );
 
     return Container(
-      margin: EdgeInsets.only(top: 40),
-      padding: EdgeInsets.symmetric( horizontal: 50 ),
+      margin: EdgeInsets.only(top: 7),
+      padding: EdgeInsets.symmetric( horizontal: 40 ),
        child: Column(
          children: <Widget>[
            
-           CustomInput(
-             icon: Icons.perm_identity,
-             placeholder: 'Nombre',
-             keyboardType: TextInputType.text, 
-             textController: nameCtrl,
+           SizedBox(
+             height: 65,
+             child: CustomInput(
+               icon: Icons.perm_identity,
+               placeholder: 'Nombre',
+               keyboardType: TextInputType.text, 
+               textController: nameCtrl,
+             ),
            ),
 
-           CustomInput(
-             icon: Icons.mail_outline,
-             placeholder: 'Correo',
-             keyboardType: TextInputType.emailAddress, 
-             textController: emailCtrl,
+           SizedBox(
+             height: 65,
+             child: CustomInput(
+               icon: Icons.mail_outline,
+               placeholder: 'Correo',
+               keyboardType: TextInputType.emailAddress, 
+               textController: emailCtrl,
+             ),
            ),
 
-           CustomInput(
-             icon: Icons.lock_outline,
-             placeholder: 'Contraseña',
-             textController: passCtrl,
-             isPassword: true,
+           SizedBox(
+             height: 65,
+             child: CustomInput(
+               icon: Icons.lock_outline,
+               placeholder: 'Contraseña',
+               textController: passCtrl,
+               isPassword: true,
+             ),
            ),
            
 
@@ -105,7 +129,7 @@ class __FormState extends State<_Form> {
                final registroOk = await authService.register(nameCtrl.text.trim(), emailCtrl.text.trim(), passCtrl.text.trim());
 
                if ( registroOk == true ) {
-                socketService.connect();
+                socketService.onConnect();
                 Navigator.pushReplacementNamed(context, 'loading');
                } else {
                  mostrarAlerta(context, 'Registro incorrecto', registroOk );

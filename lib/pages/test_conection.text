@@ -1,0 +1,63 @@
+
+
+import 'package:enri_client/service/auth_service.dart';
+import 'package:enri_client/service/socket_service.dart';
+import 'package:flutter/material.dart';
+//import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
+
+class TestConection extends StatefulWidget {
+  @override
+  _TestConectionState createState() => _TestConectionState();
+}
+
+class _TestConectionState extends State<TestConection> with TickerProviderStateMixin {
+
+ 
+//ChatService chatService;
+SocketService socketService; //dispone del emit: Para hacer coneccion por socket 
+AuthService authService; // determina quien soy yo (uid)
+
+ @override
+  void initState() { 
+    super.initState();
+    
+   // this.chatService   = Provider.of<ChatService>(context, listen: false);
+    this.socketService = Provider.of<SocketService>(context, listen: false);
+    this.authService   = Provider.of<AuthService>(context, listen: false);
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    final socketService = Provider.of<SocketService>(context);
+    
+    return Scaffold(
+      backgroundColor: Colors.blue[200],
+      appBar: AppBar(
+        backgroundColor: Colors.blue[700],
+        title: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+             Center(
+               child: Text( 
+                  'ServerStatus: ${ socketService.serverStatus}',
+                  style: TextStyle(fontSize: 14, color: Colors.white) ,              
+                ),
+             )   
+          ],
+          
+        ),
+      ),
+
+            
+    );
+  }
+  @override
+  void dispose() {
+    super.dispose();
+  }
+}
+//android:usesCleartextTraffic="true"
+
